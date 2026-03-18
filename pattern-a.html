@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>スタイルコマース株式会社 | Pattern A — Corporate Blue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:    #0073bd;
+      --blue-d:  #005a94;
+      --blue-l:  #007dc5;
+      --cyan:    #4fc3f7;
+      --bg-sub:  #f0f7ff;
+      --bg:      #ffffff;
+      --ink:     #1a1a2e;
+      --ink-60:  #5a6a7a;
+      --ink-20:  #c8d8e8;
+      --border:  #d8eaf5;
+      --r:       8px;
+      --shadow:  0 2px 12px rgba(0,115,189,0.10);
+      --shadow-h:0 8px 32px rgba(0,115,189,0.20);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Noto Sans JP','Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-thumb { background:var(--cyan); border-radius:2px; }
+
+    /* NAV */
+    #nav {
+      position:sticky; top:0; z-index:900;
+      background:rgba(255,255,255,0.97); backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+      height:62px; display:flex; align-items:center;
+      padding:0 48px; gap:0; transition:box-shadow .3s;
+    }
+    #nav.shadow { box-shadow:var(--shadow); }
+    .nav-logo { font-family:'Inter',sans-serif; font-weight:900; font-size:1rem; letter-spacing:.08em; color:var(--blue); margin-right:48px; white-space:nowrap; }
+    .nav-logo small { display:block; font-size:.55rem; font-weight:400; letter-spacing:.15em; color:var(--ink-60); }
+    .nav-links { display:flex; gap:2px; list-style:none; flex:1; }
+    .nav-links a { padding:8px 14px; border-radius:var(--r); font-size:.85rem; font-weight:500; color:var(--ink-60); transition:background .15s, color .15s; }
+    .nav-links a:hover { background:var(--bg-sub); color:var(--blue); }
+    .nav-cta { margin-left:auto; padding:9px 22px; border-radius:var(--r); background:var(--blue); color:#fff; font-size:.85rem; font-weight:700; transition:background .2s; }
+    .nav-cta:hover { background:var(--blue-d); }
+    .ham { display:none; flex-direction:column; gap:5px; cursor:pointer; margin-left:auto; }
+    .ham span { width:22px; height:2px; background:var(--blue); border-radius:2px; transition:.3s; }
+    .ham.o span:nth-child(1){ transform:rotate(45deg) translate(5px,5px); }
+    .ham.o span:nth-child(2){ opacity:0; }
+    .ham.o span:nth-child(3){ transform:rotate(-45deg) translate(5px,-5px); }
+    .mob { display:none; position:fixed; inset:0; background:#fff; z-index:1000; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
+    .mob.o { display:flex; }
+    .mob a { font-size:1.4rem; font-weight:700; color:var(--blue); }
+
+    /* HERO */
+    #hero {
+      background:var(--bg-sub);
+      min-height:calc(100vh - 62px);
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; max-width:1280px; margin:0 auto;
+      padding:80px 48px; gap:60px;
+    }
+    .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(0,115,189,.1); color:var(--blue); padding:5px 14px; border-radius:20px; font-size:.75rem; font-weight:700; letter-spacing:.12em; margin-bottom:22px; }
+    .hero-h1 { font-size:clamp(2.4rem,5vw,4rem); font-weight:900; line-height:1.05; letter-spacing:-.03em; margin-bottom:20px; }
+    .hero-h1 span { color:var(--blue); }
+    .hero-lead { font-size:1rem; color:var(--ink-60); line-height:1.85; max-width:460px; margin-bottom:36px; }
+    .hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+    .btn-fill { padding:13px 30px; border-radius:var(--r); background:var(--blue); color:#fff; font-weight:700; font-size:.95rem; transition:background .2s, transform .2s; }
+    .btn-fill:hover { background:var(--blue-d); transform:translateY(-2px); }
+    .btn-line { padding:12px 28px; border-radius:var(--r); border:2px solid var(--blue); color:var(--blue); font-weight:600; font-size:.95rem; transition:background .2s, transform .2s; }
+    .btn-line:hover { background:rgba(0,115,189,.08); transform:translateY(-2px); }
+    /* Hero card mockup */
+    .hero-card-wrap { display:flex; flex-direction:column; gap:14px; }
+    .h-card { background:#fff; border:1px solid var(--border); border-left:4px solid var(--blue); border-radius:var(--r); padding:18px 20px; box-shadow:var(--shadow); display:flex; align-items:center; gap:14px; }
+    .h-card-icon { width:44px; height:44px; border-radius:10px; background:var(--bg-sub); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+    .h-card-t { font-size:.9rem; font-weight:700; color:var(--ink); }
+    .h-card-s { font-size:.75rem; color:var(--ink-60); margin-top:2px; }
+    .h-card-badge { margin-left:auto; padding:3px 10px; border-radius:20px; font-size:.68rem; font-weight:700; background:rgba(0,115,189,.1); color:var(--blue); white-space:nowrap; }
+
+    /* SECTIONS */
+    .sec { padding:96px 0; }
+    .sec-sub { background:var(--bg-sub); }
+    .wrap { max-width:1100px; margin:0 auto; padding:0 48px; }
+    .sec-num { font-family:'Inter',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.25em; color:var(--blue); margin-bottom:8px; }
+    .sec-h { font-size:clamp(1.8rem,3vw,2.6rem); font-weight:900; letter-spacing:-.03em; color:var(--ink); margin-bottom:14px; line-height:1.1; }
+    .sec-lead { font-size:.975rem; color:var(--ink-60); line-height:1.85; max-width:560px; }
+    .sec-hd { margin-bottom:52px; }
+    .sec-hd.c { text-align:center; }
+    .sec-hd.c .sec-lead { margin:0 auto; }
+
+    /* PHILOSOPHY */
+    .phil-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .phil-card { background:#fff; border:1px solid var(--border); border-top:3px solid var(--blue); border-radius:var(--r); padding:32px 28px; box-shadow:var(--shadow); transition:transform .25s, box-shadow .25s; }
+    .phil-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-h); }
+    .phil-no { font-family:'Inter',sans-serif; font-size:2rem; font-weight:900; color:rgba(0,115,189,.15); letter-spacing:-.04em; line-height:1; margin-bottom:14px; }
+    .phil-t { font-size:1rem; font-weight:800; color:var(--ink); margin-bottom:10px; }
+    .phil-d { font-size:.875rem; color:var(--ink-60); line-height:1.8; }
+
+    /* SERVICES */
+    .svc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:20px; }
+    .svc-card { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:32px 26px; box-shadow:var(--shadow); transition:transform .25s, box-shadow .25s, border-color .25s; }
+    .svc-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-h); border-color:var(--cyan); }
+    .svc-icon { width:50px; height:50px; border-radius:12px; background:var(--bg-sub); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:18px; }
+    .svc-t { font-size:1rem; font-weight:800; color:var(--ink); margin-bottom:9px; }
+    .svc-d { font-size:.875rem; color:var(--ink-60); line-height:1.8; }
+    .svc-arr { display:inline-flex; align-items:center; gap:4px; font-size:.8rem; font-weight:700; color:var(--blue); margin-top:14px; transition:gap .2s; }
+    .svc-card:hover .svc-arr { gap:8px; }
+
+    /* STORES */
+    .store-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:760px; margin:0 auto; }
+    .store-card { display:block; background:#fff; border:1px solid var(--border); border-radius:12px; padding:36px 32px; text-align:center; box-shadow:var(--shadow); transition:transform .25s, box-shadow .25s; }
+    .store-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-h); }
+    .store-logo { width:68px; height:68px; border-radius:16px; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:900; }
+    .rk .store-logo { background:#fff0f0; color:#bf0000; border:1.5px solid #ffd0d0; }
+    .az .store-logo { background:#fffbee; color:#c45500; border:1.5px solid #ffe59e; }
+    .store-name { font-size:1.05rem; font-weight:800; color:var(--ink); margin-bottom:8px; }
+    .store-desc { font-size:.85rem; color:var(--ink-60); line-height:1.75; }
+    .store-id   { font-size:.7rem; font-weight:600; letter-spacing:.06em; color:var(--ink-20); margin:12px 0 16px; }
+    .store-btn  { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; border-radius:var(--r); border:1.5px solid var(--border); font-size:.82rem; font-weight:700; color:var(--ink); transition:border-color .2s; }
+    .store-card:hover .store-btn { border-color:var(--blue); color:var(--blue); }
+
+    /* NUMBERS */
+    .num-row { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+    .num-cell { padding:44px 24px; text-align:center; border-right:1px solid var(--border); background:#fff; transition:background .2s; }
+    .num-cell:last-child { border-right:none; }
+    .num-cell:hover { background:var(--bg-sub); }
+    .num-v { font-family:'Inter',sans-serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:900; color:var(--blue); letter-spacing:-.04em; line-height:1; margin-bottom:8px; }
+    .num-u { font-size:.9rem; font-weight:400; color:var(--ink-60); }
+    .num-l { font-size:.78rem; color:var(--ink-60); margin-top:6px; }
+
+    /* COMPANY */
+    .company-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+    .company-msg h3 { font-size:clamp(1.5rem,2.5vw,2rem); font-weight:900; letter-spacing:-.03em; color:var(--ink); margin-bottom:18px; line-height:1.25; }
+    .company-msg h3 span { color:var(--blue); }
+    .company-msg p { font-size:.9rem; color:var(--ink-60); line-height:1.9; margin-bottom:14px; }
+    .company-msg .sig { margin-top:24px; padding-top:20px; border-top:1px solid var(--border); font-size:.875rem; font-weight:700; color:var(--ink); }
+    .company-tbl { border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+    .company-tbl table { width:100%; border-collapse:collapse; }
+    .company-tbl th, .company-tbl td { padding:13px 18px; font-size:.875rem; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+    .company-tbl tr:last-child th, .company-tbl tr:last-child td { border-bottom:none; }
+    .company-tbl th { background:var(--bg-sub); color:var(--ink-60); font-weight:500; width:36%; white-space:nowrap; }
+    .company-tbl td { color:var(--ink); font-weight:500; }
+    .company-tbl a { color:var(--blue); }
+
+    /* CONTACT */
+    .contact-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; }
+    .cc { background:#fff; border:1px solid var(--border); border-radius:12px; padding:24px 20px; box-shadow:var(--shadow); transition:transform .2s, box-shadow .2s; }
+    .cc:hover { transform:translateY(-3px); box-shadow:var(--shadow-h); }
+    .cc-ic { font-size:1.5rem; margin-bottom:8px; }
+    .cc-lb { font-size:.68rem; font-weight:700; letter-spacing:.16em; color:var(--blue); margin-bottom:4px; }
+    .cc-vl { font-size:.9rem; font-weight:700; color:var(--ink); }
+    .cc-vl a { color:inherit; }
+    .line-bar { background:var(--blue); border-radius:12px; padding:28px 32px; display:flex; align-items:center; gap:18px; cursor:pointer; transition:background .2s; }
+    .line-bar:hover { background:var(--blue-d); }
+    .line-bar-ic { font-size:2.2rem; flex-shrink:0; }
+    .line-bar h4 { font-size:1rem; font-weight:800; color:#fff; }
+    .line-bar p  { font-size:.8rem; color:rgba(255,255,255,.7); margin-top:3px; }
+    .line-bar-arr { margin-left:auto; color:rgba(255,255,255,.5); font-size:1.2rem; }
+
+    /* FOOTER */
+    footer { background:var(--blue); padding:32px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .foot-brand { font-family:'Inter',sans-serif; font-weight:900; font-size:.95rem; letter-spacing:.08em; color:#fff; }
+    .foot-sub   { font-size:.7rem; color:rgba(255,255,255,.6); margin-top:2px; }
+    .foot-copy  { font-size:.75rem; color:rgba(255,255,255,.5); }
+
+    /* REVEAL */
+    .rv { opacity:0; transform:translateY(24px); transition:opacity .6s, transform .6s; }
+    .rv.d1 { transition-delay:.08s; } .rv.d2 { transition-delay:.16s; } .rv.d3 { transition-delay:.24s; } .rv.d4 { transition-delay:.32s; }
+    .rv.in { opacity:1; transform:none; }
+
+    @media(max-width:860px){ #hero{grid-template-columns:1fr; padding:60px 24px; min-height:auto;} .hero-card-wrap{display:none;} .company-grid{grid-template-columns:1fr;gap:32px;} .phil-grid{grid-template-columns:1fr;} .num-row{grid-template-columns:1fr 1fr;} .store-grid{grid-template-columns:1fr;max-width:400px;} .contact-cards{grid-template-columns:1fr;} }
+    @media(max-width:768px){ .sec{padding:68px 0;} .wrap{padding:0 24px;} .nav-links,.nav-cta{display:none;} .ham{display:flex;} #nav{padding:0 24px;} footer{padding:24px; flex-direction:column; align-items:flex-start;} }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">STYLE COMMERCE<small>スタイルコマース株式会社</small></div>
+  <ul class="nav-links">
+    <li><a href="#phil">事業内容</a></li>
+    <li><a href="#stores">ショップ</a></li>
+    <li><a href="#company">会社概要</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+  <a href="#stores" class="nav-cta">ショップを見る</a>
+  <div class="ham" id="ham"><span></span><span></span><span></span></div>
+</nav>
+<nav class="mob" id="mob">
+  <a href="#phil"    onclick="cm()">事業内容</a>
+  <a href="#stores"  onclick="cm()">ショップ</a>
+  <a href="#company" onclick="cm()">会社概要</a>
+  <a href="#contact" onclick="cm()">お問い合わせ</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div>
+    <div class="hero-eyebrow">EC × LIFESTYLE</div>
+    <h1 class="hero-h1">暮らしに、<br><span>新しいスタイル</span>を。</h1>
+    <p class="hero-lead">家電・日用品・コスメ・食品を安心・迅速にお届け。楽天市場・Amazonで展開中。</p>
+    <div class="hero-btns">
+      <a href="#stores"  class="btn-fill">ショップを見る</a>
+      <a href="#company" class="btn-line">会社概要</a>
+    </div>
+  </div>
+  <div class="hero-card-wrap">
+    <div class="h-card"><div class="h-card-icon">🏠</div><div><div class="h-card-t">家電・AV機器</div><div class="h-card-s">エディオンESCチェーン加盟</div></div><div class="h-card-badge">取扱中</div></div>
+    <div class="h-card"><div class="h-card-icon">🛒</div><div><div class="h-card-t">日用品・生活雑貨</div><div class="h-card-s">毎日の暮らしをサポート</div></div><div class="h-card-badge">取扱中</div></div>
+    <div class="h-card"><div class="h-card-icon">✨</div><div><div class="h-card-t">コスメ・食品</div><div class="h-card-s">美と健康を身近に</div></div><div class="h-card-badge">取扱中</div></div>
+  </div>
+</section>
+
+<!-- 01 PHILOSOPHY -->
+<section id="phil" class="sec">
+  <div class="wrap">
+    <div class="sec-hd rv"><div class="sec-num">01 — PHILOSOPHY</div><h2 class="sec-h">私たちの想い</h2><p class="sec-lead">すべてのご家庭が安心して使える商品を、すぐにお届けする。その想いを胸に日々取り組んでいます。</p></div>
+    <div class="phil-grid">
+      <div class="phil-card rv d1"><div class="phil-no">01</div><div class="phil-t">安心の品質</div><p class="phil-d">厳しい品質基準をクリアした商品のみを取り扱い。お客様に信頼していただける商品をお届けします。</p></div>
+      <div class="phil-card rv d2"><div class="phil-no">02</div><div class="phil-t">迅速な発送</div><p class="phil-d">ご注文確認後、最短翌日発送。お客様のお手元に一刻も早く商品が届くよう努めています。</p></div>
+      <div class="phil-card rv d3"><div class="phil-no">03</div><div class="phil-t">丁寧なサポート</div><p class="phil-d">ご不明点はお気軽にご相談ください。一人ひとりのお客様に寄り添ったサポートをご提供します。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 SERVICES -->
+<section id="services" class="sec sec-sub">
+  <div class="wrap">
+    <div class="sec-hd rv"><div class="sec-num">02 — SERVICES</div><h2 class="sec-h">取扱カテゴリ</h2><p class="sec-lead">生活に必要なあらゆる商品を揃えています。</p></div>
+    <div class="svc-grid">
+      <div class="svc-card rv d1"><div class="svc-icon">🏠</div><div class="svc-t">家電・AV機器</div><p class="svc-d">エディオンESCチェーン加盟店として最新家電を幅広く取り揃え。</p><span class="svc-arr">詳しく見る →</span></div>
+      <div class="svc-card rv d2"><div class="svc-icon">🛒</div><div class="svc-t">日用品・生活雑貨</div><p class="svc-d">消耗品から収納グッズまで、快適な毎日をサポートする品々。</p><span class="svc-arr">詳しく見る →</span></div>
+      <div class="svc-card rv d3"><div class="svc-icon">✨</div><div class="svc-t">コスメ・美容</div><p class="svc-d">スキンケアからメイクアップまで、美と健康をサポートするアイテム。</p><span class="svc-arr">詳しく見る →</span></div>
+      <div class="svc-card rv d4"><div class="svc-icon">🍱</div><div class="svc-t">食品・飲料</div><p class="svc-d">産地直送品やこだわり食材など、食卓を豊かにする食品を厳選。</p><span class="svc-arr">詳しく見る →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 STORES -->
+<section id="stores" class="sec">
+  <div class="wrap">
+    <div class="sec-hd c rv"><div class="sec-num">03 — STORES</div><h2 class="sec-h">オンラインショップ</h2><p class="sec-lead">「Faiz」ブランドで楽天・Amazonに出店中。</p></div>
+    <div class="store-grid">
+      <a href="https://www.rakuten.ne.jp/gold/faiz-japan/" target="_blank" rel="noopener" class="store-card rk rv d1">
+        <div class="store-logo">R</div>
+        <div class="store-name">楽天市場</div>
+        <p class="store-desc">楽天ポイントをためながらお得にお買い物。豊富な品揃えで迅速配送。</p>
+        <div class="store-id">Faiz 楽天市場店</div>
+        <span class="store-btn">ショップを開く →</span>
+      </a>
+      <a href="https://www.amazon.co.jp/s?i=merchant-items&me=A2VG8B67RYOBRQ" target="_blank" rel="noopener" class="store-card az rv d2">
+        <div class="store-logo">a</div>
+        <div class="store-name">Amazon</div>
+        <p class="store-desc">Prime対応で翌日配送も。信頼のAmazonで安心してご購入いただけます。</p>
+        <div class="store-id">Faiz-jp Amazon店</div>
+        <span class="store-btn">ショップを開く →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="sec sec-sub">
+  <div class="wrap">
+    <div class="sec-hd c rv"><div class="sec-num">— NUMBERS</div><h2 class="sec-h">実績</h2></div>
+    <div class="num-row rv">
+      <div class="num-cell"><div class="num-v"><span class="cu" data-t="2019">0</span></div><div class="num-l">創業年</div></div>
+      <div class="num-cell"><div class="num-v"><span class="cu" data-t="4">0</span><span class="num-u"> 名</span></div><div class="num-l">スタッフ数</div></div>
+      <div class="num-cell"><div class="num-v"><span class="cu" data-t="8000">0</span><span class="num-u"> 万円</span></div><div class="num-l">売上目標</div></div>
+      <div class="num-cell"><div class="num-v"><span class="cu" data-t="2">0</span><span class="num-u"> 大</span></div><div class="num-l">ECモール</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 COMPANY -->
+<section id="company" class="sec">
+  <div class="wrap">
+    <div class="sec-hd rv"><div class="sec-num">04 — COMPANY</div><h2 class="sec-h">会社概要</h2></div>
+    <div class="company-grid">
+      <div class="company-msg rv d1">
+        <h3>EC × 暮らしの豊かさを<br><span>追求し続ける。</span></h3>
+        <p>すべてのご家庭が安心して商品を使えるよう、丁寧な商品選定と迅速な発送で、お客様の日常生活の豊かさに貢献しています。</p>
+        <p>楽天・Amazonの主要プラットフォームに展開し、より多くのお客様に価値ある商品をお届けすることを使命としています。</p>
+        <div class="sig">代表取締役　磯田 英樹</div>
+      </div>
+      <div class="company-tbl rv d2">
+        <table>
+          <tr><th>会社名</th><td>スタイルコマース株式会社</td></tr>
+          <tr><th>設立</th><td>2024年5月15日（創業 2019年10月）</td></tr>
+          <tr><th>資本金</th><td>100万円</td></tr>
+          <tr><th>代表</th><td>磯田 英樹</td></tr>
+          <tr><th>従業員</th><td>4名</td></tr>
+          <tr><th>所在地</th><td>〒662-0881 兵庫県西宮市上ヶ原七番町3-26-101</td></tr>
+          <tr><th>電話</th><td><a href="tel:05035752812">050-3575-2812</a></td></tr>
+          <tr><th>メール</th><td><a href="mailto:isd@style-commerce.co.jp">isd@style-commerce.co.jp</a></td></tr>
+          <tr><th>事業内容</th><td>EC販売・家電・日用品・コスメ・食品の卸売・小売</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 CONTACT -->
+<section id="contact" class="sec sec-sub">
+  <div class="wrap">
+    <div class="sec-hd c rv"><div class="sec-num">05 — CONTACT</div><h2 class="sec-h">お問い合わせ</h2><p class="sec-lead">ご不明点・ご要望はお気軽にご連絡ください。</p></div>
+    <div class="contact-cards">
+      <div class="cc rv d1"><div class="cc-ic">📞</div><div class="cc-lb">PHONE</div><div class="cc-vl"><a href="tel:05035752812">050-3575-2812</a></div></div>
+      <div class="cc rv d2"><div class="cc-ic">✉️</div><div class="cc-lb">EMAIL</div><div class="cc-vl"><a href="mailto:isd@style-commerce.co.jp">isd@style-commerce.co.jp</a></div></div>
+      <div class="cc rv d3"><div class="cc-ic">📍</div><div class="cc-lb">ADDRESS</div><div class="cc-vl" style="font-size:.82rem;">兵庫県西宮市上ヶ原七番町3-26-101</div></div>
+    </div>
+    <a href="https://lin.ee/485bmzcd" target="_blank" rel="noopener" class="line-bar rv">
+      <div class="line-bar-ic">💬</div>
+      <div><h4>LINE公式アカウント</h4><p>最新情報・クーポン・キャンペーンをLINEでお届けします。</p></div>
+      <div class="line-bar-arr">→</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div><div class="foot-brand">STYLE COMMERCE</div><div class="foot-sub">スタイルコマース株式会社</div></div>
+  <div class="foot-copy">© 2024 Style Commerce Co., Ltd. All Rights Reserved.</div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('shadow',scrollY>10));
+  const h=document.getElementById('ham'),m=document.getElementById('mob');
+  h.addEventListener('click',()=>{h.classList.toggle('o');m.classList.toggle('o');});
+  function cm(){h.classList.remove('o');m.classList.remove('o');}
+  const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}}),{threshold:.1});
+  document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+  function cu(el,t,ms=1500){const t0=performance.now();const f=n=>{const p=Math.min((n-t0)/ms,1),v=1-Math.pow(1-p,3);el.textContent=Math.floor(v*t).toLocaleString();if(p<1)requestAnimationFrame(f);else el.textContent=t.toLocaleString();};requestAnimationFrame(f);}
+  const no=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){cu(e.target,+e.target.dataset.t);no.unobserve(e.target);}}),{threshold:.5});
+  document.querySelectorAll('.cu').forEach(el=>no.observe(el));
+</script>
+</body>
+</html>
