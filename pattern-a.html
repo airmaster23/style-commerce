@@ -334,6 +334,43 @@
   function cu(el,t,ms=1500){const t0=performance.now();const f=n=>{const p=Math.min((n-t0)/ms,1),v=1-Math.pow(1-p,3);el.textContent=Math.floor(v*t).toLocaleString();if(p<1)requestAnimationFrame(f);else el.textContent=t.toLocaleString();};requestAnimationFrame(f);}
   const no=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){cu(e.target,+e.target.dataset.t);no.unobserve(e.target);}}),{threshold:.5});
   document.querySelectorAll('.cu').forEach(el=>no.observe(el));
+
+  // ===== CURSOR TRAIL =====
+  const trailCount = 18;
+  const trails = [];
+  let mx = -200, my = -200;
+  // Cursor dot
+  const dot = document.createElement('div');
+  dot.style.cssText = 'position:fixed;width:8px;height:8px;background:#0073bd;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:multiply;';
+  document.body.appendChild(dot);
+  // Trail particles
+  for(let i=0;i<trailCount;i++){
+    const t=document.createElement('div');
+    const size = 6 - i*0.2;
+    const alpha = 1 - i/trailCount;
+    t.style.cssText = `position:fixed;width:${Math.max(size,2)}px;height:${Math.max(size,2)}px;background:rgba(0,115,189,${alpha*0.6});border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:none;`;
+    document.body.appendChild(t);
+    trails.push({el:t,x:-200,y:-200});
+  }
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+  // Hover scale for dot
+  document.querySelectorAll('a,button,.svc-card,.store-card,.phil-card,.cc').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ dot.style.transform='translate(-50%,-50%) scale(2.5)'; dot.style.background='rgba(0,115,189,0.3)'; });
+    el.addEventListener('mouseleave',()=>{ dot.style.transform='translate(-50%,-50%) scale(1)'; dot.style.background='#0073bd'; });
+  });
+  // Animate trail
+  (function loop(){
+    let px=mx,py=my;
+    for(let i=0;i<trails.length;i++){
+      const t=trails[i];
+      t.x+=(px-t.x)*0.35;
+      t.y+=(py-t.y)*0.35;
+      t.el.style.left=t.x+'px';
+      t.el.style.top=t.y+'px';
+      px=t.x; py=t.y;
+    }
+    requestAnimationFrame(loop);
+  })();
 </script>
 </body>
 </html>
