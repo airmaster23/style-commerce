@@ -6,751 +6,864 @@
   <title>スタイルコマース株式会社 | Style Commerce Co., Ltd.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
   <style>
-    /* =========================================
-       RESET & BASE
-    ========================================= */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    /* =============================================
+       DESIGN TOKENS — Shopify-inspired
+    ============================================= */
     :root {
-      --green:     #008060;
-      --green-dark:#005e47;
-      --green-light:#e6f4f0;
-      --black:     #0d0d0d;
-      --gray-900:  #1a1a1a;
-      --gray-700:  #3d3d3d;
-      --gray-500:  #737373;
-      --gray-300:  #c4c4c4;
-      --gray-100:  #f5f5f5;
-      --gray-50:   #fafafa;
-      --white:     #ffffff;
-      --border:    #e8e8e8;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+      --shopify-green:   #008060;
+      --shopify-green-d: #004c3f;
+      --shopify-green-l: #e3f1ec;
+      --ink:             #0d0d0d;
+      --ink-80:          #333333;
+      --ink-50:          #6d6d6d;
+      --ink-20:          #b5b5b5;
+      --ink-10:          #e3e3e3;
+      --surface:         #ffffff;
+      --surface-subdued: #f6f6f1;   /* Shopify の特徴的クリームベージュ */
+      --surface-dark:    #1a1a1a;
+      --border:          #e3e3e3;
+      --radius-sm:  6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
+      --shadow-lift: 0 8px 28px rgba(0,0,0,0.10), 0 0 1px rgba(0,0,0,0.06);
     }
-    html { scroll-behavior: smooth; }
+
+    /* =============================================
+       RESET
+    ============================================= */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; font-size:16px; }
     body {
-      font-family: 'Noto Sans JP', 'Inter', sans-serif;
-      background: var(--white);
-      color: var(--gray-900);
+      font-family: 'Noto Sans JP','Inter',system-ui,-apple-system,sans-serif;
+      background: var(--surface);
+      color: var(--ink);
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    a { text-decoration: none; color: inherit; }
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--gray-100); }
-    ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+    a { text-decoration:none; color:inherit; }
+    img { max-width:100%; display:block; }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--surface-subdued); }
+    ::-webkit-scrollbar-thumb { background:var(--ink-20); border-radius:3px; }
 
-    /* =========================================
-       NAV
-    ========================================= */
-    #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(255,255,255,0.95);
+    /* =============================================
+       TOPBAR ANNOUNCEMENT
+    ============================================= */
+    .topbar {
+      background: var(--ink);
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 10px 20px;
+      letter-spacing: 0.02em;
+    }
+    .topbar a { color: #fff; font-weight:600; text-decoration:underline; }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: sticky; top: 0; z-index: 999;
+      background: rgba(255,255,255,0.97);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 0 48px;
-      height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: box-shadow 0.3s;
+      height: 60px;
+      display: flex; align-items: center;
+      padding: 0 40px;
+      gap: 0;
+      transition: box-shadow .25s;
     }
-    #navbar.scrolled { box-shadow: var(--shadow-md); }
-    .nav-logo {
+    #nav.shadow { box-shadow: 0 2px 16px rgba(0,0,0,.08); }
+    .nav-brand {
       font-family: 'Inter', sans-serif;
-      font-weight: 800; font-size: 1.1rem;
-      letter-spacing: 0.04em;
-      color: var(--black);
+      font-weight: 900; font-size: 1.05rem;
+      letter-spacing: .06em; color: var(--ink);
+      white-space: nowrap; margin-right: 40px;
     }
-    .nav-logo span {
-      display: block; font-size: 0.58rem;
-      font-weight: 400; letter-spacing: 0.12em;
-      color: var(--gray-500); font-family: 'Noto Sans JP', sans-serif;
-      margin-top: 1px;
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      list-style: none; flex: 1;
     }
-    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
     .nav-links a {
-      font-size: 0.875rem; font-weight: 500;
-      color: var(--gray-700);
-      transition: color 0.2s;
+      padding: 8px 14px; border-radius: var(--radius-sm);
+      font-size: .85rem; font-weight: 500;
+      color: var(--ink-80);
+      transition: background .15s, color .15s;
     }
-    .nav-links a:hover { color: var(--black); }
-    .nav-cta {
-      padding: 9px 22px; border-radius: 6px;
-      background: var(--black); color: var(--white) !important;
-      font-weight: 600 !important; font-size: 0.875rem;
-      transition: background 0.2s, transform 0.2s !important;
+    .nav-links a:hover { background: var(--surface-subdued); color: var(--ink); }
+    .nav-actions { display:flex; align-items:center; gap:10px; margin-left:auto; }
+    .nav-btn-outline {
+      padding: 8px 18px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); font-size:.85rem; font-weight:600;
+      color: var(--ink); background: transparent;
+      transition: border-color .2s;
     }
-    .nav-cta:hover { background: var(--gray-900); transform: none !important; }
+    .nav-btn-outline:hover { border-color: var(--ink-50); }
+    .nav-btn-primary {
+      padding: 9px 20px; border-radius: var(--radius-sm);
+      background: var(--shopify-green); color: #fff;
+      font-size:.85rem; font-weight:700;
+      transition: background .2s, transform .15s;
+    }
+    .nav-btn-primary:hover { background: var(--shopify-green-d); transform: translateY(-1px); }
     /* Hamburger */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-    .mobile-nav {
-      display: none; position: fixed; inset: 0; z-index: 1050;
-      background: var(--white); flex-direction: column;
-      align-items: center; justify-content: center; gap: 28px;
+    .ham { display:none; flex-direction:column; gap:5px; cursor:pointer; margin-left:auto; }
+    .ham span { display:block; width:22px; height:2px; background:var(--ink); border-radius:2px; transition:.3s; }
+    .ham.open span:nth-child(1){ transform:rotate(45deg) translate(5px,5px); }
+    .ham.open span:nth-child(2){ opacity:0; }
+    .ham.open span:nth-child(3){ transform:rotate(-45deg) translate(5px,-5px); }
+    .mob-nav {
+      display:none; position:fixed; inset:0; background:var(--surface); z-index:1100;
+      flex-direction:column; align-items:center; justify-content:center; gap:24px;
     }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-size: 1.4rem; font-weight: 600; color: var(--gray-900); }
-    .mobile-nav a:hover { color: var(--green); }
+    .mob-nav.open { display:flex; }
+    .mob-nav a { font-size:1.5rem; font-weight:700; color:var(--ink); }
 
-    /* =========================================
+    /* =============================================
        HERO
-    ========================================= */
+    ============================================= */
     #hero {
-      padding-top: 64px;
-      min-height: 100vh;
+      background: var(--surface-subdued);
+      min-height: calc(100vh - 96px);
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
-      max-width: 1280px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding-left: 48px;
-      padding-right: 48px;
+      padding: 0 80px;
       gap: 60px;
     }
-    .hero-left { padding: 80px 0; }
-    .hero-tag {
+    .hero-copy { padding: 80px 0; }
+    .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
+      background: var(--shopify-green-l);
+      color: var(--shopify-green-d);
       padding: 5px 14px; border-radius: 20px;
-      background: var(--green-light);
-      color: var(--green-dark);
-      font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.08em; margin-bottom: 28px;
-    }
-    .hero-tag::before { content: '●'; font-size: 0.5rem; }
-    .hero-title {
-      font-size: clamp(2.4rem, 4.5vw, 4rem);
-      font-weight: 900; line-height: 1.1;
-      letter-spacing: -0.03em;
-      color: var(--black);
-      margin-bottom: 20px;
-    }
-    .hero-title em { font-style: normal; color: var(--green); }
-    .hero-sub {
-      font-size: 1.05rem; color: var(--gray-500);
-      font-weight: 400; line-height: 1.85;
-      max-width: 480px; margin-bottom: 40px;
-    }
-    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-black {
-      padding: 14px 32px; border-radius: 8px;
-      background: var(--black); color: var(--white);
-      font-weight: 700; font-size: 0.95rem;
-      border: 2px solid var(--black);
-      transition: background 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-    .btn-black:hover { background: var(--gray-900); transform: translateY(-2px); }
-    .btn-ghost {
-      padding: 14px 32px; border-radius: 8px;
-      background: transparent; color: var(--black);
-      font-weight: 600; font-size: 0.95rem;
-      border: 2px solid var(--border);
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-    .btn-ghost:hover { border-color: var(--gray-900); transform: translateY(-2px); }
-    /* Hero right: visual */
-    .hero-right {
-      display: flex; align-items: center; justify-content: center;
-      padding: 80px 0;
-    }
-    .hero-visual {
-      width: 100%; max-width: 480px;
-      background: var(--gray-100);
-      border-radius: 20px;
-      padding: 40px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-lg);
-      position: relative;
-    }
-    .hero-visual-head {
-      display: flex; align-items: center; gap: 10px;
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
       margin-bottom: 24px;
     }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot-r { background: #ff5f57; }
-    .dot-y { background: #febc2e; }
-    .dot-g { background: #28c840; }
-    .hero-card {
-      background: var(--white); border-radius: 12px;
-      padding: 20px 22px; margin-bottom: 14px;
+    .hero-h1 {
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -.04em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .hero-h1 .accent { color: var(--shopify-green); }
+    .hero-lead {
+      font-size: 1.1rem;
+      color: var(--ink-50);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+    .hero-cta-group { display:flex; gap:12px; flex-wrap:wrap; }
+    .btn-lg-green {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 36px; border-radius: var(--radius-sm);
+      background: var(--shopify-green); color: #fff;
+      font-weight: 700; font-size: 1rem;
+      transition: background .2s, transform .2s;
+    }
+    .btn-lg-green:hover { background: var(--shopify-green-d); transform: translateY(-2px); }
+    .btn-lg-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 32px; border-radius: var(--radius-sm);
+      border: 2px solid var(--ink-10); color: var(--ink);
+      font-weight: 600; font-size: 1rem;
+      transition: border-color .2s, transform .2s;
+      background: transparent;
+    }
+    .btn-lg-outline:hover { border-color: var(--ink-50); transform: translateY(-2px); }
+    .hero-trust {
+      margin-top: 32px;
+      font-size: .8rem; color: var(--ink-50);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-trust::before { content:'✓'; color:var(--shopify-green); font-weight:700; }
+
+    /* Hero right — product mockup */
+    .hero-mockup {
+      padding: 80px 0;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .mockup-wrap {
+      width: 100%; max-width: 440px;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lift), 0 0 0 1px rgba(0,0,0,.04);
+      overflow: hidden;
+    }
+    .mockup-header {
+      background: var(--ink);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .m-dot { width:11px; height:11px; border-radius:50%; }
+    .m-dot-r { background:#ff5f57; }
+    .m-dot-y { background:#febc2e; }
+    .m-dot-g { background:#28c840; }
+    .mockup-body { padding: 24px; }
+    .mockup-kpi-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .kpi-box {
+      background: var(--surface-subdued);
+      border-radius: var(--radius-md);
+      padding: 16px 14px; text-align: center;
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      display: flex; align-items: center; gap: 16px;
     }
-    .hero-card:last-child { margin-bottom: 0; }
-    .hero-card-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: var(--green-light);
+    .kpi-val { font-size: 1.35rem; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+    .kpi-lbl { font-size: .68rem; color: var(--ink-50); margin-top: 4px; }
+    .kpi-box.green { background: var(--shopify-green-l); border-color: #b3ddd1; }
+    .kpi-box.green .kpi-val { color: var(--shopify-green-d); }
+    .mockup-list { display:flex; flex-direction:column; gap:10px; }
+    .mockup-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface-subdued);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      transition: box-shadow .2s;
+    }
+    .mockup-item:hover { box-shadow: var(--shadow-card); }
+    .m-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--shopify-green-l);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; flex-shrink: 0;
+      font-size: 1.2rem; flex-shrink: 0;
     }
-    .hero-card-title { font-size: 0.88rem; font-weight: 700; color: var(--black); }
-    .hero-card-sub { font-size: 0.78rem; color: var(--gray-500); margin-top: 2px; }
-    .hero-card-badge {
-      margin-left: auto; padding: 4px 10px;
-      border-radius: 20px; font-size: 0.7rem; font-weight: 600;
-      background: var(--green-light); color: var(--green-dark); flex-shrink: 0;
+    .m-title { font-size: .88rem; font-weight: 700; color: var(--ink); }
+    .m-sub   { font-size: .75rem; color: var(--ink-50); margin-top: 2px; }
+    .m-badge {
+      margin-left: auto; padding: 3px 10px; border-radius: 20px;
+      font-size: .7rem; font-weight: 700;
+      background: var(--shopify-green-l); color: var(--shopify-green-d); flex-shrink:0;
     }
-    /* scroll indicator */
-    .hero-scroll {
-      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      color: var(--gray-300); font-size: 0.68rem; letter-spacing: 0.2em;
-    }
-    .scroll-line {
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--gray-300), transparent);
-      animation: scrollLine 1.8s ease-in-out infinite;
-    }
-    @keyframes scrollLine { 0%,100%{ transform: scaleY(1); opacity:0.5; } 50%{ transform: scaleY(1.3); opacity:1; } }
 
-    /* =========================================
-       SECTION COMMONS
-    ========================================= */
-    section { padding: 100px 48px; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
-      color: var(--green); text-transform: uppercase; margin-bottom: 12px;
+    /* =============================================
+       SECTIONS COMMONS
+    ============================================= */
+    .section { padding: 96px 0; }
+    .section.cream { background: var(--surface-subdued); }
+    .section.dark  { background: var(--ink); }
+    .section.white { background: var(--surface); }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--shopify-green);
+      margin-bottom: 12px;
     }
-    .section-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
-      font-weight: 900; line-height: 1.15;
-      color: var(--black); margin-bottom: 16px;
-      letter-spacing: -0.02em;
+    .section.dark .eyebrow { color: #5eead4; }
+    .heading-xl {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -.03em; color: var(--ink);
+      margin-bottom: 16px;
     }
-    .section-desc {
-      font-size: 1rem; color: var(--gray-500);
-      line-height: 1.85; max-width: 560px;
+    .section.dark .heading-xl { color: #fff; }
+    .lead {
+      font-size: 1.05rem; color: var(--ink-50); line-height: 1.8;
+      max-width: 560px; font-weight: 400;
     }
-    .section-header { margin-bottom: 56px; }
-    .section-header.center { text-align: center; }
-    .section-header.center .section-desc { margin: 0 auto; }
+    .section.dark .lead { color: rgba(255,255,255,.5); }
+    .section-hd { margin-bottom: 56px; }
+    .section-hd.center { text-align:center; }
+    .section-hd.center .lead { margin:0 auto; }
 
-    /* =========================================
-       SERVICES
-    ========================================= */
-    #services { background: var(--white); }
+    /* =============================================
+       SERVICES GRID
+    ============================================= */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(248px,1fr));
+      gap: 20px;
     }
-    .service-card {
-      background: var(--gray-50);
+    .svc-card {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px; padding: 36px 32px;
-      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      transition: box-shadow .25s, transform .25s;
     }
-    .service-card:hover {
-      box-shadow: var(--shadow-lg); transform: translateY(-4px);
-      border-color: var(--gray-300);
-    }
-    .service-icon {
-      width: 52px; height: 52px; border-radius: 12px;
-      background: var(--green-light);
+    .svc-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-4px); }
+    .svc-icon {
+      width: 52px; height: 52px; border-radius: var(--radius-md);
+      background: var(--shopify-green-l);
       display: flex; align-items: center; justify-content: center;
       font-size: 1.5rem; margin-bottom: 20px;
     }
-    .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: var(--black); }
-    .service-card p { font-size: 0.875rem; color: var(--gray-500); line-height: 1.8; }
-    .service-link {
+    .svc-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .svc-desc  { font-size: .875rem; color: var(--ink-50); line-height: 1.8; }
+    .svc-link  {
       display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.82rem; font-weight: 600; color: var(--green);
-      margin-top: 18px; transition: gap 0.2s;
+      font-size: .82rem; font-weight: 700; color: var(--shopify-green);
+      margin-top: 16px; transition: gap .2s;
     }
-    .service-card:hover .service-link { gap: 8px; }
+    .svc-card:hover .svc-link { gap: 8px; }
 
-    /* =========================================
+    /* =============================================
        STORES
-    ========================================= */
-    #stores { background: var(--gray-50); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    ============================================= */
     .stores-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
       gap: 20px;
     }
     .store-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 16px; padding: 36px 32px;
-      text-align: center;
-      transition: box-shadow 0.25s, transform 0.25s;
       display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      text-align: center;
+      transition: box-shadow .25s, transform .25s;
+      position: relative; overflow: hidden;
     }
-    .store-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-    .store-logo-wrap {
+    .store-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 4px; opacity: 0; transition: opacity .25s;
+    }
+    .store-card.rk::after { background: #bf0000; }
+    .store-card.yh::after { background: #ff0033; }
+    .store-card.az::after { background: #ff9900; }
+    .store-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-4px); }
+    .store-card:hover::after { opacity: 1; }
+    .store-logo {
       width: 72px; height: 72px; border-radius: 18px;
       margin: 0 auto 20px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em;
+      font-size: 1.6rem; font-weight: 900;
     }
-    .store-card.rakuten .store-logo-wrap { background: #fff0f0; color: #bf0000; border: 1px solid #ffd0d0; }
-    .store-card.yahoo  .store-logo-wrap { background: #fff5f0; color: #ff0033; border: 1px solid #ffd0c0; }
-    .store-card.amazon .store-logo-wrap { background: #fffbf0; color: #c45500; border: 1px solid #ffe0a0; }
-    .store-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--black); margin-bottom: 8px; }
-    .store-card p  { font-size: 0.85rem; color: var(--gray-500); line-height: 1.75; }
-    .store-tag {
-      display: inline-block; margin-top: 16px;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--gray-500);
-    }
-    .store-open {
+    .rk .store-logo { background: #fff0f0; color: #bf0000; border: 1.5px solid #ffd0d0; }
+    .yh .store-logo { background: #fff5f0; color: #e60033; border: 1.5px solid #ffd0be; }
+    .az .store-logo { background: #fffbee; color: #c45500; border: 1.5px solid #ffe59e; }
+    .store-name { font-size: 1.1rem; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+    .store-desc { font-size: .875rem; color: var(--ink-50); line-height: 1.75; }
+    .store-id   { font-size: .72rem; font-weight: 600; letter-spacing: .06em; color: var(--ink-20); margin: 16px 0 20px; }
+    .store-btn  {
       display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 20px; padding: 8px 18px;
-      border-radius: 6px; border: 1.5px solid var(--border);
-      font-size: 0.82rem; font-weight: 600; color: var(--gray-700);
-      transition: border-color 0.2s, color 0.2s;
+      padding: 10px 22px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); font-size: .85rem; font-weight: 700;
+      color: var(--ink); transition: border-color .2s, background .2s;
     }
-    .store-card:hover .store-open { border-color: var(--black); color: var(--black); }
+    .store-card:hover .store-btn { border-color: var(--ink); background: var(--surface-subdued); }
 
-    /* =========================================
-       NUMBERS
-    ========================================= */
-    #numbers { background: var(--black); }
-    #numbers .section-label { color: #5eead4; }
-    #numbers .section-title { color: var(--white); }
-    #numbers .section-desc { color: rgba(255,255,255,0.5); }
+    /* =============================================
+       NUMBERS — dark section
+    ============================================= */
     .numbers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2px; border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px; overflow: hidden;
+      grid-template-columns: repeat(4,1fr);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
     }
-    .number-card {
-      padding: 48px 32px;
-      background: rgba(255,255,255,0.03);
+    .num-cell {
+      padding: 52px 32px;
+      border-right: 1px solid rgba(255,255,255,.08);
       text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      transition: background 0.25s;
+      transition: background .25s;
     }
-    .number-card:last-child { border-right: none; }
-    .number-card:hover { background: rgba(255,255,255,0.06); }
-    .number-value {
+    .num-cell:last-child { border-right: none; }
+    .num-cell:hover { background: rgba(255,255,255,.04); }
+    .num-val {
       font-family: 'Inter', sans-serif;
-      font-size: clamp(2.2rem, 4vw, 3.2rem);
-      font-weight: 800; color: var(--white);
-      letter-spacing: -0.03em; line-height: 1;
-      margin-bottom: 10px;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 900; letter-spacing: -.04em;
+      color: #fff; line-height: 1; margin-bottom: 10px;
     }
-    .number-unit { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.6); }
-    .number-label { font-size: 0.82rem; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; }
+    .num-unit { font-size: .95rem; font-weight: 400; color: rgba(255,255,255,.55); }
+    .num-lbl  { font-size: .8rem; color: rgba(255,255,255,.4); letter-spacing: .04em; }
 
-    /* =========================================
+    /* =============================================
+       STEPS
+    ============================================= */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .step-cell {
+      padding: 44px 36px;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      transition: background .25s;
+    }
+    .step-cell:last-child { border-right: none; }
+    .step-cell:hover { background: var(--surface-subdued); }
+    .step-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.8rem; font-weight: 900;
+      color: var(--shopify-green-l);
+      letter-spacing: -.05em; line-height: 1;
+      margin-bottom: 16px;
+      -webkit-text-stroke: 2px var(--shopify-green);
+    }
+    .step-title { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .step-desc  { font-size: .875rem; color: var(--ink-50); line-height: 1.8; }
+
+    /* =============================================
        ABOUT
-    ========================================= */
-    #about { background: var(--white); }
-    .about-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: start;
+    ============================================= */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
     }
-    .about-message h3 {
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      font-weight: 900; line-height: 1.3;
-      color: var(--black); margin-bottom: 20px;
-      letter-spacing: -0.02em;
+    .about-copy h2 { font-size: clamp(1.8rem,3vw,2.6rem); font-weight:900; line-height:1.2; letter-spacing:-.03em; color:var(--ink); margin-bottom:20px; }
+    .about-copy p  { font-size:.925rem; color:var(--ink-50); line-height:1.9; margin-bottom:14px; }
+    .about-copy .sig { margin-top:28px; padding-top:24px; border-top:1px solid var(--border); font-size:.875rem; font-weight:700; color:var(--ink-80); }
+    .about-table {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow:hidden;
     }
-    .about-message p {
-      font-size: 0.925rem; color: var(--gray-500);
-      line-height: 1.9; margin-bottom: 16px;
+    .about-table table { width:100%; border-collapse:collapse; }
+    .about-table th, .about-table td {
+      padding: 14px 20px; font-size:.875rem;
+      text-align:left; border-bottom:1px solid var(--border);
+      vertical-align:top; line-height:1.6;
     }
-    .about-message .ceo {
-      margin-top: 28px; padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-size: 0.875rem; color: var(--gray-700); font-weight: 600;
-    }
-    .about-table-wrap {
-      background: var(--gray-50); border: 1px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-    }
-    .about-table-wrap table { width: 100%; border-collapse: collapse; }
-    .about-table-wrap th, .about-table-wrap td {
-      padding: 14px 20px; font-size: 0.875rem;
-      text-align: left; border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-    .about-table-wrap tr:last-child th,
-    .about-table-wrap tr:last-child td { border-bottom: none; }
-    .about-table-wrap th { color: var(--gray-500); font-weight: 500; width: 38%; white-space: nowrap; }
-    .about-table-wrap td { color: var(--gray-900); font-weight: 500; }
+    .about-table tr:last-child th,
+    .about-table tr:last-child td { border-bottom:none; }
+    .about-table th { color:var(--ink-50); font-weight:500; width:36%; background:var(--surface-subdued); white-space:nowrap; }
+    .about-table td { color:var(--ink); font-weight:500; }
+    .about-table a { color:var(--shopify-green); }
 
-    /* =========================================
+    /* =============================================
        CONTACT
-    ========================================= */
-    #contact { background: var(--gray-50); border-top: 1px solid var(--border); }
-    .contact-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px; margin-bottom: 40px;
+    ============================================= */
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 16px; margin-bottom: 32px;
     }
     .contact-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 12px; padding: 24px 22px;
-      transition: box-shadow 0.2s, transform 0.2s;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px 22px;
+      transition: box-shadow .2s, transform .2s;
     }
-    .contact-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .contact-icon { font-size: 1.5rem; margin-bottom: 10px; }
-    .contact-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: var(--gray-500); margin-bottom: 5px; }
-    .contact-value { font-size: 0.925rem; font-weight: 600; color: var(--black); }
-    .line-bar {
-      background: var(--black); border-radius: 12px;
-      padding: 28px 32px; display: flex; align-items: center; gap: 20px;
-      transition: background 0.2s; cursor: pointer;
-    }
-    .line-bar:hover { background: var(--gray-900); }
-    .line-bar-icon { font-size: 2.2rem; flex-shrink: 0; }
-    .line-bar h4 { font-size: 1rem; font-weight: 700; color: var(--white); }
-    .line-bar p  { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-top: 3px; }
-    .line-bar-arrow { margin-left: auto; color: rgba(255,255,255,0.4); font-size: 1.2rem; }
+    .contact-card:hover { box-shadow: var(--shadow-lift); transform: translateY(-3px); }
+    .cc-icon  { font-size:1.6rem; margin-bottom:10px; }
+    .cc-label { font-size:.7rem; font-weight:700; letter-spacing:.16em; color:var(--ink-50); text-transform:uppercase; margin-bottom:4px; }
+    .cc-value { font-size:.95rem; font-weight:700; color:var(--ink); }
+    .cc-value a { color:inherit; }
 
-    /* =========================================
+    .line-block {
+      background: var(--ink);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      display: flex; align-items: center; gap: 20px;
+      cursor: pointer; transition: background .2s;
+    }
+    .line-block:hover { background: var(--ink-80); }
+    .line-block-icon { font-size:2.4rem; flex-shrink:0; }
+    .line-block h4 { font-size:1.05rem; font-weight:800; color:#fff; }
+    .line-block p  { font-size:.82rem; color:rgba(255,255,255,.5); margin-top:3px; }
+    .line-arrow    { margin-left:auto; color:rgba(255,255,255,.3); font-size:1.3rem; }
+
+    /* =============================================
        FOOTER
-    ========================================= */
+    ============================================= */
     footer {
-      background: var(--white); border-top: 1px solid var(--border);
-      padding: 36px 48px;
+      background: var(--surface-subdued);
+      border-top: 1px solid var(--border);
+      padding: 40px;
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
+      flex-wrap: wrap; gap: 16px;
     }
-    .footer-logo {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800; font-size: 1rem;
-      letter-spacing: 0.04em; color: var(--black);
-    }
-    .footer-copy { font-size: 0.78rem; color: var(--gray-300); }
+    .foot-brand { font-family:'Inter',sans-serif; font-weight:900; font-size:1rem; letter-spacing:.06em; color:var(--ink); }
+    .foot-sub   { font-size:.75rem; color:var(--ink-20); margin-top:3px; }
+    .foot-copy  { font-size:.78rem; color:var(--ink-20); }
 
-    /* =========================================
+    /* =============================================
+       SCROLL REVEAL
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.delay-1 { transition-delay: .08s; }
+    .reveal.delay-2 { transition-delay: .16s; }
+    .reveal.delay-3 { transition-delay: .24s; }
+    .reveal.delay-4 { transition-delay: .32s; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* =============================================
        RESPONSIVE
-    ========================================= */
-    @media (max-width: 900px) {
-      #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
-      .hero-right { display: none; }
-      .about-inner { grid-template-columns: 1fr; gap: 36px; }
+    ============================================= */
+    @media (max-width: 1024px) {
+      #hero { padding: 0 40px; }
+    }
+    @media (max-width: 860px) {
+      #hero { grid-template-columns: 1fr; padding: 60px 24px; min-height: auto; }
+      .hero-mockup { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .numbers-grid { grid-template-columns: 1fr 1fr; }
+      .num-cell { border-bottom: 1px solid rgba(255,255,255,.08); }
     }
     @media (max-width: 768px) {
-      section { padding: 72px 24px; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      #navbar { padding: 0 24px; }
-      footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+      .section { padding: 72px 0; }
+      .wrap { padding: 0 24px; }
+      .nav-links, .nav-actions { display: none; }
+      .ham { display: flex; }
+      #nav { padding: 0 24px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .step-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      footer { padding: 28px 24px; flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 480px) {
+      .hero-h1 { font-size: 2.4rem; }
       .numbers-grid { grid-template-columns: 1fr 1fr; }
-      .number-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========== NAVBAR ========== -->
-  <nav id="navbar">
-    <div class="nav-logo">
-      STYLE COMMERCE
-      <span>スタイルコマース株式会社</span>
-    </div>
+  <!-- ====== TOPBAR ====== -->
+  <div class="topbar">
+    楽天市場・Yahoo!ショッピング・Amazon で好評発売中 — <a href="#stores">今すぐチェック →</a>
+  </div>
+
+  <!-- ====== NAV ====== -->
+  <nav id="nav">
+    <div class="nav-brand">STYLE COMMERCE</div>
     <ul class="nav-links">
-      <li><a href="#hero">トップ</a></li>
       <li><a href="#services">事業内容</a></li>
       <li><a href="#stores">ショップ</a></li>
       <li><a href="#about">会社概要</a></li>
-      <li><a href="#contact" class="nav-cta">お問い合わせ</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
     </ul>
-    <div class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
+    <div class="nav-actions">
+      <a href="mailto:isd@style-commerce.co.jp" class="nav-btn-outline">メール</a>
+      <a href="#stores" class="nav-btn-primary">ショップを見る</a>
     </div>
+    <div class="ham" id="ham"><span></span><span></span><span></span></div>
   </nav>
 
-  <!-- Mobile Menu -->
-  <nav class="mobile-nav" id="mobileNav">
-    <a href="#hero"     onclick="closeMobile()">トップ</a>
-    <a href="#services" onclick="closeMobile()">事業内容</a>
-    <a href="#stores"   onclick="closeMobile()">ショップ</a>
-    <a href="#numbers"  onclick="closeMobile()">数字で見る</a>
-    <a href="#about"    onclick="closeMobile()">会社概要</a>
-    <a href="#contact"  onclick="closeMobile()">お問い合わせ</a>
+  <!-- Mobile nav -->
+  <nav class="mob-nav" id="mobNav">
+    <a href="#services" onclick="closeMob()">事業内容</a>
+    <a href="#stores"   onclick="closeMob()">ショップ</a>
+    <a href="#numbers"  onclick="closeMob()">実績</a>
+    <a href="#about"    onclick="closeMob()">会社概要</a>
+    <a href="#contact"  onclick="closeMob()">お問い合わせ</a>
   </nav>
 
-  <!-- ========== HERO ========== -->
+  <!-- ====== HERO ====== -->
   <section id="hero">
-    <div class="hero-left" data-aos="fade-right" data-aos-duration="800">
-      <div class="hero-tag">EC × LIFESTYLE</div>
-      <h1 class="hero-title">
-        暮らしに、<br>
-        新しい<em>スタイル</em>を。
+    <div class="hero-copy">
+      <div class="hero-eyebrow">EC × LIFESTYLE</div>
+      <h1 class="hero-h1">
+        暮らしを、<br>もっと<span class="accent">豊か</span>に。
       </h1>
-      <p class="hero-sub">
-        家電・日用品・コスメ・食品を、安心・迅速にお届け。<br>
-        楽天・Yahoo!・Amazonの3大プラットフォームで展開中。
+      <p class="hero-lead">
+        家電・日用品・コスメ・食品を安心・迅速にお届け。<br>
+        楽天・Yahoo!・Amazonの3大ECモールで展開中。
       </p>
-      <div class="hero-btns">
-        <a href="#stores" class="btn-black">ショップを見る</a>
-        <a href="#about"  class="btn-ghost">会社概要</a>
+      <div class="hero-cta-group">
+        <a href="#stores" class="btn-lg-green">ショップを見る →</a>
+        <a href="#about"  class="btn-lg-outline">会社概要</a>
       </div>
+      <p class="hero-trust">登録不要・クレジットカード不要でご覧いただけます</p>
     </div>
-    <div class="hero-right" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
-      <div class="hero-visual">
-        <div class="hero-visual-head">
-          <div class="dot dot-r"></div>
-          <div class="dot dot-y"></div>
-          <div class="dot dot-g"></div>
+    <div class="hero-mockup">
+      <div class="mockup-wrap">
+        <div class="mockup-header">
+          <div class="m-dot m-dot-r"></div>
+          <div class="m-dot m-dot-y"></div>
+          <div class="m-dot m-dot-g"></div>
         </div>
-        <div class="hero-card">
-          <div class="hero-card-icon">🏠</div>
-          <div>
-            <div class="hero-card-title">家電・AV機器</div>
-            <div class="hero-card-sub">エディオンESCチェーン加盟</div>
+        <div class="mockup-body">
+          <div class="mockup-kpi-row">
+            <div class="kpi-box green">
+              <div class="kpi-val">3</div>
+              <div class="kpi-lbl">EC モール</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val">4</div>
+              <div class="kpi-lbl">スタッフ</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val">8000<span style="font-size:.65em">万</span></div>
+              <div class="kpi-lbl">売上目標</div>
+            </div>
           </div>
-          <div class="hero-card-badge">取扱中</div>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-icon">🛒</div>
-          <div>
-            <div class="hero-card-title">日用品・生活雑貨</div>
-            <div class="hero-card-sub">毎日の暮らしをサポート</div>
+          <div class="mockup-list">
+            <div class="mockup-item">
+              <div class="m-icon">🏠</div>
+              <div><div class="m-title">家電・AV機器</div><div class="m-sub">エディオンESCチェーン</div></div>
+              <div class="m-badge">取扱中</div>
+            </div>
+            <div class="mockup-item">
+              <div class="m-icon">🛒</div>
+              <div><div class="m-title">日用品・生活雑貨</div><div class="m-sub">毎日の暮らしをサポート</div></div>
+              <div class="m-badge">取扱中</div>
+            </div>
+            <div class="mockup-item">
+              <div class="m-icon">✨</div>
+              <div><div class="m-title">コスメ・食品</div><div class="m-sub">美と健康を身近に</div></div>
+              <div class="m-badge">取扱中</div>
+            </div>
           </div>
-          <div class="hero-card-badge">取扱中</div>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-icon">✨</div>
-          <div>
-            <div class="hero-card-title">コスメ・食品</div>
-            <div class="hero-card-sub">美と健康を身近に</div>
-          </div>
-          <div class="hero-card-badge">取扱中</div>
         </div>
       </div>
-    </div>
-    <div class="hero-scroll">
-      <span>SCROLL</span>
-      <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ========== SERVICES ========== -->
-  <section id="services">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label">OUR SERVICES</div>
-        <h2 class="section-title">取扱カテゴリ</h2>
-        <p class="section-desc">生活に必要なあらゆる商品を、安心・迅速にお届けします。</p>
+  <!-- ====== SERVICES ====== -->
+  <section id="services" class="section white">
+    <div class="wrap">
+      <div class="section-hd reveal">
+        <div class="eyebrow">OUR SERVICES</div>
+        <h2 class="heading-xl">取扱カテゴリ</h2>
+        <p class="lead">すべてのご家庭が安心して使えるよう、丁寧に選び抜いた商品をお届けします。</p>
       </div>
       <div class="services-grid">
-        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="service-icon">🏠</div>
-          <h3>家電・AV機器</h3>
-          <p>エディオンESCチェーン加盟店として最新家電を幅広く取り揃え。専門知識で最適な一台をご提案します。</p>
-          <span class="service-link">詳しく見る →</span>
+        <div class="svc-card reveal delay-1">
+          <div class="svc-icon">🏠</div>
+          <div class="svc-title">家電・AV機器</div>
+          <p class="svc-desc">エディオンESCチェーン加盟店として最新家電を幅広く取り揃え。専門知識で最適な一台をご提案します。</p>
+          <span class="svc-link">詳しく見る →</span>
         </div>
-        <div class="service-card" data-aos="fade-up" data-aos-delay="80">
-          <div class="service-icon">🛒</div>
-          <h3>日用品・生活雑貨</h3>
-          <p>消耗品から収納グッズまで、毎日の生活を快適にする日用品を豊富にラインナップ。</p>
-          <span class="service-link">詳しく見る →</span>
+        <div class="svc-card reveal delay-2">
+          <div class="svc-icon">🛒</div>
+          <div class="svc-title">日用品・生活雑貨</div>
+          <p class="svc-desc">消耗品から収納グッズまで、毎日の生活を快適にする日用品を豊富にラインナップ。</p>
+          <span class="svc-link">詳しく見る →</span>
         </div>
-        <div class="service-card" data-aos="fade-up" data-aos-delay="160">
-          <div class="service-icon">✨</div>
-          <h3>コスメ・美容</h3>
-          <p>スキンケアからメイクアップまで、美と健康をサポートするアイテムをセレクト。</p>
-          <span class="service-link">詳しく見る →</span>
+        <div class="svc-card reveal delay-3">
+          <div class="svc-icon">✨</div>
+          <div class="svc-title">コスメ・美容</div>
+          <p class="svc-desc">スキンケアからメイクアップまで、美と健康をサポートするアイテムを厳選。</p>
+          <span class="svc-link">詳しく見る →</span>
         </div>
-        <div class="service-card" data-aos="fade-up" data-aos-delay="240">
-          <div class="service-icon">🍱</div>
-          <h3>食品・飲料</h3>
-          <p>産地直送品やこだわり食材など、毎日の食卓を豊かにする食品・飲料を厳選してお届け。</p>
-          <span class="service-link">詳しく見る →</span>
+        <div class="svc-card reveal delay-4">
+          <div class="svc-icon">🍱</div>
+          <div class="svc-title">食品・飲料</div>
+          <p class="svc-desc">産地直送品やこだわり食材など、毎日の食卓を豊かにする食品を厳選してお届け。</p>
+          <span class="svc-link">詳しく見る →</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== STORES ========== -->
-  <section id="stores">
-    <div class="container">
-      <div class="section-header center">
-        <div class="section-label">OUR STORES</div>
-        <h2 class="section-title">オンラインショップ</h2>
-        <p class="section-desc">「Faiz」ブランドで3大ECプラットフォームに出店中。<br>今すぐお気に入りのショップでお買い物を。</p>
+  <!-- ====== HOW IT WORKS ====== -->
+  <section class="section cream">
+    <div class="wrap">
+      <div class="section-hd reveal">
+        <div class="eyebrow">HOW WE WORK</div>
+        <h2 class="heading-xl">安心のお届けまで</h2>
+        <p class="lead">厳選した商品を、迅速・丁寧にお届けするための3ステップ。</p>
+      </div>
+      <div class="steps-grid reveal">
+        <div class="step-cell">
+          <div class="step-num">01</div>
+          <div class="step-title">厳選仕入れ</div>
+          <p class="step-desc">品質・安全性・価格を徹底的に吟味。エディオンESCチェーンのノウハウを活かした信頼の仕入れ。</p>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">02</div>
+          <div class="step-title">3大モール出品</div>
+          <p class="step-desc">楽天・Yahoo!・Amazonでご注文いただけます。お好きなプラットフォームからご購入ください。</p>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">03</div>
+          <div class="step-title">迅速発送</div>
+          <p class="step-desc">ご注文確認後、最短翌日発送。丁寧な梱包でお客様のお手元にお届けします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== STORES ====== -->
+  <section id="stores" class="section white">
+    <div class="wrap">
+      <div class="section-hd center reveal">
+        <div class="eyebrow">OUR STORES</div>
+        <h2 class="heading-xl">オンラインショップ</h2>
+        <p class="lead">「Faiz」ブランドで3大ECプラットフォームに出店中。<br>クリックしてお好きなショップへ。</p>
       </div>
       <div class="stores-grid">
-        <a href="https://www.rakuten.ne.jp/gold/faiz-japan/" target="_blank" rel="noopener" class="store-card rakuten" data-aos="fade-up" data-aos-delay="0">
-          <div class="store-logo-wrap">R</div>
-          <h3>楽天市場</h3>
-          <p>ポイントをためながらお得にお買い物。豊富な品揃えで迅速配送対応。</p>
-          <div class="store-tag">Faiz 楽天市場店</div>
-          <div><span class="store-open">ショップを開く →</span></div>
+        <a href="https://www.rakuten.ne.jp/gold/faiz-japan/" target="_blank" rel="noopener" class="store-card rk reveal delay-1">
+          <div class="store-logo">R</div>
+          <div class="store-name">楽天市場</div>
+          <p class="store-desc">ポイントをためながらお得にお買い物。楽天ポイント対応。</p>
+          <div class="store-id">Faiz 楽天市場店</div>
+          <span class="store-btn">ショップを開く →</span>
         </a>
-        <a href="https://store.shopping.yahoo.co.jp/faiz-jp/" target="_blank" rel="noopener" class="store-card yahoo" data-aos="fade-up" data-aos-delay="80">
-          <div class="store-logo-wrap">Y!</div>
-          <h3>Yahoo!ショッピング</h3>
-          <p>PayPayポイント対応。使いやすいインターフェースで快適なショッピング体験。</p>
-          <div class="store-tag">Faiz-jp Yahoo!ショッピング店</div>
-          <div><span class="store-open">ショップを開く →</span></div>
+        <a href="https://store.shopping.yahoo.co.jp/faiz-jp/" target="_blank" rel="noopener" class="store-card yh reveal delay-2">
+          <div class="store-logo">Y!</div>
+          <div class="store-name">Yahoo!ショッピング</div>
+          <p class="store-desc">PayPayポイント対応。使いやすいインターフェースで快適ショッピング。</p>
+          <div class="store-id">Faiz-jp Yahoo!ショッピング店</div>
+          <span class="store-btn">ショップを開く →</span>
         </a>
-        <a href="https://www.amazon.co.jp/s?i=merchant-items&me=A2VG8B67RYOBRQ" target="_blank" rel="noopener" class="store-card amazon" data-aos="fade-up" data-aos-delay="160">
-          <div class="store-logo-wrap">a</div>
-          <h3>Amazon</h3>
-          <p>Prime対応で翌日配送も。信頼性の高いAmazonで安心してご購入いただけます。</p>
-          <div class="store-tag">Faiz-jp Amazon店</div>
-          <div><span class="store-open">ショップを開く →</span></div>
+        <a href="https://www.amazon.co.jp/s?i=merchant-items&me=A2VG8B67RYOBRQ" target="_blank" rel="noopener" class="store-card az reveal delay-3">
+          <div class="store-logo">a</div>
+          <div class="store-name">Amazon</div>
+          <p class="store-desc">Prime対応で翌日配送も。信頼のAmazonで安心してご購入いただけます。</p>
+          <div class="store-id">Faiz-jp Amazon店</div>
+          <span class="store-btn">ショップを開く →</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ========== NUMBERS ========== -->
-  <section id="numbers">
-    <div class="container">
-      <div class="section-header center">
-        <div class="section-label">NUMBERS</div>
-        <h2 class="section-title">数字で見るスタイルコマース</h2>
-        <p class="section-desc">創業から着実に成長を続ける私たちの実績。</p>
+  <!-- ====== NUMBERS ====== -->
+  <section id="numbers" class="section dark">
+    <div class="wrap">
+      <div class="section-hd center reveal">
+        <div class="eyebrow">BY THE NUMBERS</div>
+        <h2 class="heading-xl">数字で見るスタイルコマース</h2>
+        <p class="lead">創業から着実に成長を続ける私たちの実績。</p>
       </div>
-      <div class="numbers-grid">
-        <div class="number-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="number-value"><span class="count-up" data-target="2019">0</span></div>
-          <div class="number-label" style="margin-top:8px;">創業年</div>
+      <div class="numbers-grid reveal">
+        <div class="num-cell">
+          <div class="num-val"><span class="count-up" data-target="2019">0</span></div>
+          <div class="num-lbl" style="margin-top:8px;">創業年</div>
         </div>
-        <div class="number-card" data-aos="fade-up" data-aos-delay="80">
-          <div class="number-value"><span class="count-up" data-target="4">0</span><span class="number-unit"> 名</span></div>
-          <div class="number-label" style="margin-top:8px;">スタッフ数</div>
+        <div class="num-cell">
+          <div class="num-val"><span class="count-up" data-target="4">0</span><span class="num-unit"> 名</span></div>
+          <div class="num-lbl" style="margin-top:8px;">スタッフ数</div>
         </div>
-        <div class="number-card" data-aos="fade-up" data-aos-delay="160">
-          <div class="number-value"><span class="count-up" data-target="8000">0</span><span class="number-unit"> 万円</span></div>
-          <div class="number-label" style="margin-top:8px;">売上目標（2025年度）</div>
+        <div class="num-cell">
+          <div class="num-val"><span class="count-up" data-target="8000">0</span><span class="num-unit"> 万円</span></div>
+          <div class="num-lbl" style="margin-top:8px;">売上目標（2025年度）</div>
         </div>
-        <div class="number-card" data-aos="fade-up" data-aos-delay="240">
-          <div class="number-value"><span class="count-up" data-target="3">0</span><span class="number-unit"> 大</span></div>
-          <div class="number-label" style="margin-top:8px;">ECプラットフォーム</div>
+        <div class="num-cell">
+          <div class="num-val"><span class="count-up" data-target="3">0</span><span class="num-unit"> 大</span></div>
+          <div class="num-lbl" style="margin-top:8px;">ECプラットフォーム</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== ABOUT ========== -->
-  <section id="about">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label">COMPANY</div>
-        <h2 class="section-title">会社概要</h2>
+  <!-- ====== ABOUT ====== -->
+  <section id="about" class="section cream">
+    <div class="wrap">
+      <div class="section-hd reveal">
+        <div class="eyebrow">COMPANY</div>
+        <h2 class="heading-xl">会社概要</h2>
       </div>
-      <div class="about-inner">
-        <div class="about-message" data-aos="fade-right">
-          <h3>EC × 暮らしの豊かさを<br>追求し続ける。</h3>
+      <div class="about-grid">
+        <div class="about-copy reveal delay-1">
+          <h2>EC × 暮らしの豊かさを<br>追求し続ける。</h2>
           <p>スタイルコマース株式会社は、すべてのご家庭が安心して商品を使えるよう、丁寧な商品選定と迅速な発送で、お客様の日常生活の豊かさに貢献しています。</p>
           <p>楽天・Yahoo!・Amazonの主要プラットフォームに展開し、より多くのお客様に価値ある商品をお届けすることを使命としています。</p>
-          <div class="ceo">代表取締役　磯田 英樹</div>
+          <div class="sig">代表取締役　磯田 英樹</div>
         </div>
-        <div class="about-table-wrap" data-aos="fade-left">
+        <div class="about-table reveal delay-2">
           <table>
             <tr><th>会社名</th><td>スタイルコマース株式会社</td></tr>
             <tr><th>英語名</th><td>STYLE COMMERCE Co., Ltd.</td></tr>
-            <tr><th>設立</th><td>2024年5月15日<br><span style="color:var(--gray-500);font-size:0.82rem;">（創業 2019年10月）</span></td></tr>
+            <tr><th>設立</th><td>2024年5月15日<br><small style="color:var(--ink-50)">（創業 2019年10月）</small></td></tr>
             <tr><th>資本金</th><td>100万円</td></tr>
             <tr><th>代表</th><td>磯田 英樹</td></tr>
             <tr><th>従業員</th><td>4名</td></tr>
             <tr><th>所在地</th><td>〒662-0881<br>兵庫県西宮市上ヶ原七番町3-26-101</td></tr>
-            <tr><th>電話</th><td><a href="tel:05035752812" style="color:var(--black);">050-3575-2812</a></td></tr>
-            <tr><th>メール</th><td><a href="mailto:isd@style-commerce.co.jp" style="color:var(--green);">isd@style-commerce.co.jp</a></td></tr>
-            <tr><th>事業内容</th><td>EC販売・家電・日用品・<br>コスメ・食品の卸売・小売</td></tr>
+            <tr><th>電話</th><td><a href="tel:05035752812">050-3575-2812</a></td></tr>
+            <tr><th>メール</th><td><a href="mailto:isd@style-commerce.co.jp">isd@style-commerce.co.jp</a></td></tr>
+            <tr><th>事業内容</th><td>EC販売・家電・日用品・コスメ・食品の卸売・小売</td></tr>
           </table>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== CONTACT ========== -->
-  <section id="contact">
-    <div class="container">
-      <div class="section-header center">
-        <div class="section-label">CONTACT</div>
-        <h2 class="section-title">お問い合わせ</h2>
-        <p class="section-desc">ご不明点・ご要望はお気軽にご連絡ください。<br>丁寧・迅速にご対応いたします。</p>
+  <!-- ====== CONTACT ====== -->
+  <section id="contact" class="section white">
+    <div class="wrap">
+      <div class="section-hd center reveal">
+        <div class="eyebrow">CONTACT</div>
+        <h2 class="heading-xl">お問い合わせ</h2>
+        <p class="lead">ご不明点・ご要望はお気軽にご連絡ください。丁寧・迅速にご対応いたします。</p>
       </div>
-      <div class="contact-grid">
-        <div class="contact-card" data-aos="fade-up" data-aos-delay="0">
-          <div class="contact-icon">📞</div>
-          <div class="contact-label">PHONE</div>
-          <div class="contact-value"><a href="tel:05035752812" style="color:inherit;">050-3575-2812</a></div>
+      <div class="contact-cards">
+        <div class="contact-card reveal delay-1">
+          <div class="cc-icon">📞</div>
+          <div class="cc-label">PHONE</div>
+          <div class="cc-value"><a href="tel:05035752812">050-3575-2812</a></div>
         </div>
-        <div class="contact-card" data-aos="fade-up" data-aos-delay="60">
-          <div class="contact-icon">✉️</div>
-          <div class="contact-label">EMAIL</div>
-          <div class="contact-value"><a href="mailto:isd@style-commerce.co.jp" style="color:inherit;">isd@style-commerce.co.jp</a></div>
+        <div class="contact-card reveal delay-2">
+          <div class="cc-icon">✉️</div>
+          <div class="cc-label">EMAIL</div>
+          <div class="cc-value"><a href="mailto:isd@style-commerce.co.jp">isd@style-commerce.co.jp</a></div>
         </div>
-        <div class="contact-card" data-aos="fade-up" data-aos-delay="120">
-          <div class="contact-icon">📍</div>
-          <div class="contact-label">ADDRESS</div>
-          <div class="contact-value" style="font-size:0.875rem;">兵庫県西宮市上ヶ原七番町3-26-101</div>
+        <div class="contact-card reveal delay-3">
+          <div class="cc-icon">📍</div>
+          <div class="cc-label">ADDRESS</div>
+          <div class="cc-value" style="font-size:.875rem;">兵庫県西宮市上ヶ原七番町3-26-101</div>
         </div>
       </div>
-      <a href="https://lin.ee/485bmzcd" target="_blank" rel="noopener" class="line-bar" data-aos="fade-up">
-        <div class="line-bar-icon">💬</div>
+      <a href="https://lin.ee/485bmzcd" target="_blank" rel="noopener" class="line-block reveal">
+        <div class="line-block-icon">💬</div>
         <div>
           <h4>LINE公式アカウント</h4>
-          <p>最新情報・クーポン・キャンペーンをLINEでお届けします。</p>
+          <p>最新情報・クーポン・キャンペーンをLINEでお届けします。友だち追加はこちら。</p>
         </div>
-        <div class="line-bar-arrow">→</div>
+        <div class="line-arrow">→</div>
       </a>
     </div>
   </section>
 
-  <!-- ========== FOOTER ========== -->
+  <!-- ====== FOOTER ====== -->
   <footer>
     <div>
-      <div class="footer-logo">STYLE COMMERCE</div>
-      <div style="font-size:0.78rem;color:var(--gray-300);margin-top:3px;">スタイルコマース株式会社</div>
+      <div class="foot-brand">STYLE COMMERCE</div>
+      <div class="foot-sub">スタイルコマース株式会社</div>
     </div>
-    <div class="footer-copy">© 2024 Style Commerce Co., Ltd. All Rights Reserved.</div>
+    <div class="foot-copy">© 2024 Style Commerce Co., Ltd. All Rights Reserved.</div>
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({ duration: 650, once: true, offset: 60 });
-
-    // Navbar scroll
+    // Nav shadow
     window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+      document.getElementById('nav').classList.toggle('shadow', scrollY > 10);
     });
 
     // Hamburger
-    const ham = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobileNav');
-    ham.addEventListener('click', () => {
-      ham.classList.toggle('open');
-      mobileNav.classList.toggle('open');
-    });
-    function closeMobile() {
-      ham.classList.remove('open');
-      mobileNav.classList.remove('open');
-    }
+    const ham = document.getElementById('ham');
+    const mob = document.getElementById('mobNav');
+    ham.addEventListener('click', () => { ham.classList.toggle('open'); mob.classList.toggle('open'); });
+    function closeMob() { ham.classList.remove('open'); mob.classList.remove('open'); }
+
+    // Scroll Reveal
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
     // Count Up
-    function animateCount(el, target, duration = 1600) {
-      const start = performance.now();
-      const update = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        const e = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.floor(e * target).toLocaleString();
-        if (p < 1) requestAnimationFrame(update);
+    function countUp(el, target, ms = 1600) {
+      const t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / ms, 1);
+        const v = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(v * target).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
         else el.textContent = target.toLocaleString();
       };
-      requestAnimationFrame(update);
+      requestAnimationFrame(tick);
     }
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          animateCount(e.target, parseInt(e.target.dataset.target));
-          observer.unobserve(e.target);
-        }
-      });
+    const numObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { countUp(e.target, +e.target.dataset.target); numObs.unobserve(e.target); } });
     }, { threshold: 0.5 });
-    document.querySelectorAll('.count-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.count-up').forEach(el => numObs.observe(el));
   </script>
 </body>
 </html>
